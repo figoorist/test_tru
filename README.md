@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby 2.5.3
+Rails 5.2
+postgresql-10
 
-Things you may want to cover:
+Спеки: bundle exec rspec
 
-* Ruby version
+Валидаторы моделей: app/validators
 
-* System dependencies
+Данные для входа в бд: .env, пример .env.example
+rake db:drop db:create db:migrate
+rake db:seed
+rails s
 
-* Configuration
+Features:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Создать пост  :3000/posts title=<title> body=<body> login=<login>
+2. Поставить оценку посту  :3000/posts/<id поста>/ratings value=<значение>
+3. Получить топ N постов по среднему рейтингу  :3000/top/<N>
+4. Получить список айпи, с которых постило несколько разных авторов   :3000/ips
