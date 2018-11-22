@@ -8,11 +8,11 @@ RSpec.describe Post, type: :model do
   # Validation tests
   it "is valid with valid attribute" do
   	user = create(:user)
-    expect(Post.new(title: "title1", body: "Bodybody", user: user)).to be_valid
+    expect(Post.create(title: "title1", body: "Bodybody", user: user)).to be_valid
   end
 
   it "is not valid with "" attribute" do
   	user = create(:user)
-    expect(Post.new(title: "", body: "Bodybody", user: user)).to_not be_valid
+    expect(Post.create(title: "", body: "Bodybody", user: user)).to_not be_valid
   end
 end

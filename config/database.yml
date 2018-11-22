@@ -1,9 +1,9 @@
 development:
   adapter: postgresql
   host: localhost
-  username: vitya
+  username: <%= ENV['DATABASE_USER'] %>
   database: tru-dev
-  password: 'pass'
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
 
 # Warning: The database defined as "test" will be erased and
@@ -12,14 +12,14 @@ development:
 test:
   adapter: postgresql
   host: localhost
-  username: vitya
+  username: <%= ENV['DATABASE_USER'] %>
   database: tru-test
-  password: 'pass'
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
 
 production:
   adapter: postgresql
   host: localhost
-  username: vitya
+  username: <%= ENV['DATABASE_USER'] %>
   database: tru-dev
-  password: 'pass'
+  password: <%= ENV['DATABASE_PASSWORD'] %>

@@ -105,7 +105,12 @@ RSpec.describe 'Ratings API' do
     end
 
     context 'when post does not exist' do
+
       let(:post_id) { 0 }
+      
+      before do 
+        post "/posts/#{post_id}/ratings", params: { value: 4 }
+      end
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)

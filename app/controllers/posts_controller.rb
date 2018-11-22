@@ -39,7 +39,7 @@ class PostsController < ApplicationController
   # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
   # GET /posts/top/:n
   def ips
-    posts = Post.select("author_ip, user_id").group(:author_ip, :user_id).having('COUNT(user_id) > 1')
+    posts = Post.joins(:user).select("author_ip, user_id").group(:author_ip, :user_id).having("count(author_ip)>1")
     json_response(posts)
   end
 

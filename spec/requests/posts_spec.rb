@@ -138,12 +138,14 @@ RSpec.describe 'Posts API', type: :request do
   describe 'GET /ips' do
     before do
       create(:post, user: user, author_ip: ip)
+      # Создаем пост для еще одного ip
+      create(:post, user: user, author_ip: posts.first.author_ip)
       get "/ips"
     end
 
     it 'returns the ips' do
       expect(json).to_not be_empty
-      expect(json).to eq(0)
+      expect(json.size).to eq(2)
     end
   end
 
