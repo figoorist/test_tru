@@ -1,6 +1,6 @@
 class UserValidator < ActiveModel::Validator
   def validate(record)
-    if record.login == nil || record.login.strip == ""
+    if !record.login.present?
       record.errors[:login] << 'must be given!'
     end
 

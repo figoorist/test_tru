@@ -7,7 +7,7 @@ FactoryBot.define do
     factory :post_with_ratings do
 	    after(:create) do |post|
 	      4.times do
-	      	 create(:rating, post: post, value: 5)
+	      	create(:rating, post: post, value: 5)
 	      end
 	    end
     end

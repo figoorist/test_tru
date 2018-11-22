@@ -121,5 +121,4 @@ RSpec.describe 'Ratings API' do
       end
     end
   end
-
 end

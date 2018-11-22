@@ -10,18 +10,19 @@ require 'faker'
 
 # Постов в базе должно быть хотя бы 200к
 # Авторов лучше сделать в районе 100 штук,
-100.times do |i|
+10.times do |i|
   user = User.create(login: "user#{i}")
   # айпишников использовать штук 50 разных
-  50.times do
+  5.times do
   	ip = Faker::Internet.ip_v4_address
-  	40.times do
+  	4.times do
 	  title = Faker::Lorem.sentence
 	  body = Faker::Lorem.paragraph
 	  post = Post.create(title: title, body: body, author_ip: ip, user: user)
 	  # Часть постов должна получить оценки
+	  special = Random.new 42
 	  rand(3).times do
-	  	Rating.create(value: rand(1..5), post: post)
+	  	Rating.create(value: special.rand(1..5), post: post)
 	  end
 	end
 

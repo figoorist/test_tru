@@ -1,14 +1,14 @@
 class PostValidator < ActiveModel::Validator
   def validate(record)
-    if record.title == nil || record.title.strip == ""
+    if !record.title.present?
       record.errors[:title] << 'must be given'
     end
 
-    if record.body == nil || record.body.strip == ""
+    if !record.body.present?
       record.errors[:body] << 'must be given'
     end
 
-    if record.user == nil
+    if !record.user.present?
       record.errors[:user] << 'must be given'
     end
   end

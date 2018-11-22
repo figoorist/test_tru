@@ -145,8 +145,7 @@ RSpec.describe 'Posts API', type: :request do
 
     it 'returns the ips' do
       expect(json).to_not be_empty
-      expect(json.size).to eq(2)
+      expect(json).to eq(2)
     end
   end
-
 end

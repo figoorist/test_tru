@@ -1,11 +1,10 @@
 class RatingValidator < ActiveModel::Validator
   def validate(record)
-    if record.value == nil || record.value == ""
+    if !record.value.present?
       record.errors[:value] << 'must be given'
       
-    elsif record.value < 1 || record.value > 5
+    elsif (1..5).exclude?(record.value)
       record.errors[:value] << 'out of range'
     end
-
   end
 end

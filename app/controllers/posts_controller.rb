@@ -14,7 +14,7 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-  	if current_user = User.find_by(login: params[:login]) then
+  	if current_user = User.find_by(login: params[:login])
       @post = Post.create!(title: params[:title], body: params[:body], author_ip: request.remote_ip, user: current_user)
     else
       new_user = User.create!(login: params[:login])
@@ -32,14 +32,14 @@ class PostsController < ApplicationController
   # 3. Получить топ N постов по среднему рейтингу. Просто массив объектов с заголовками и содержанием.
   # GET /posts/top/:n
   def top
-    posts = Post.order(average_rating: :desc).first(params[:n].to_i)
+    posts = Post.all.order(:average_rating).first(params[:n].to_i)
     json_response(posts)
   end
 
   # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
   # GET /posts/top/:n
   def ips
-    posts = Post.joins(:user).select("author_ip, user_id").group(:author_ip, :user_id).having("count(author_ip)>1")
+    posts = Post.all.group(:author_ip).count
     json_response(posts)
   end
 
