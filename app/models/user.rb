@@ -3,5 +3,5 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   # validation
-  validates_presence_of :login
+  validates_with UserValidator
 end

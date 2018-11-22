@@ -9,6 +9,8 @@ RSpec.describe 'Posts API', type: :request do
   #Новый логин
   let(:login) { "l0g1n" }
   let(:ip) { "127.0.0.1" }
+  let(:post_count) { 5 }
+  let!(:local_post) { create(:post, user: user, author_ip: ip) }
 
   # GET /posts
   describe 'GET /posts' do
@@ -18,7 +20,7 @@ RSpec.describe 'Posts API', type: :request do
     it 'returns posts' do
       #`json` хэлпер для разбора json
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json.size).to eq(11)
     end
 
     it 'returns status code 200' do
@@ -76,7 +78,7 @@ RSpec.describe 'Posts API', type: :request do
         expect(User.count).to eq(1)
       end
 
-      it 'returns status code 201' do
+      it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
     end
@@ -109,20 +111,39 @@ RSpec.describe 'Posts API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/posts', params: { title: '', body: '', login: '' } }
+      before { post '/posts', params: { title: '', body: '', login: login } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body)
-          .to match(/Validation failed: Title can't be blank/)
-        expect(response.body)
-          .to match(/Body can't be blank/)
-        expect(response.body)
-          .to match(/Login can't be blank/)
+        expect(response.body).to match(/Validation failed: Title must be given/)
+        expect(response.body).to match(/Body must be given/)
       end
+    end
+  end
+
+  # GET /posts/top/:n
+  describe 'GET /top/:n' do
+    before { get "/top/#{post_count}" }
+
+    it 'returns the posts' do
+      expect(json).not_to be_empty
+      expect(json.count).to eq(post_count)
+    end
+  end
+
+  # GET /posts/ips
+  describe 'GET /ips' do
+    before do
+      create(:post, user: user, author_ip: ip)
+      get "/ips"
+    end
+
+    it 'returns the ips' do
+      expect(json).to_not be_empty
+      expect(json).to eq(0)
     end
   end
 

@@ -2,5 +2,5 @@ class Rating < ApplicationRecord
   belongs_to :post
 
   # validation
-  validates_presence_of :value
+  validates_with RatingValidator
 end

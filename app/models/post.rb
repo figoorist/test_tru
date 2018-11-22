@@ -4,7 +4,5 @@ class Post < ApplicationRecord
   has_many :ratings, dependent: :destroy
 
   # validation
-  validates_presence_of :title
-  validates_presence_of :body
-  validates_presence_of :author_ip
+  validates_with PostValidator
 end

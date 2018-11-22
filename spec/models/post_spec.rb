@@ -4,9 +4,15 @@ RSpec.describe Post, type: :model do
   # Association test
   # ensure an item record belongs to a single todo record
   it { should belong_to(:user) }
-  # Validation test
-  # ensure column title is present before saving
-  it { should validate_presence_of(:title) }
-  it { should validate_presence_of(:body) }
-  it { should validate_presence_of(:author_ip) }
+
+  # Validation tests
+  it "is valid with valid attribute" do
+  	user = create(:user)
+    expect(Post.new(title: "title1", body: "Bodybody", user: user)).to be_valid
+  end
+
+  it "is not valid with "" attribute" do
+  	user = create(:user)
+    expect(Post.new(title: "", body: "Bodybody", user: user)).to_not be_valid
+  end
 end
