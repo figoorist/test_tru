@@ -124,6 +124,7 @@ RSpec.describe 'Posts API', type: :request do
     end
   end
 
+  # 3. Получить топ N постов по среднему рейтингу. Просто массив объектов с заголовками и содержанием.
   # GET /posts/top/:n
   describe 'GET /top/:n' do
     before { get "/top/#{post_count}" }
@@ -134,6 +135,7 @@ RSpec.describe 'Posts API', type: :request do
     end
   end
 
+  # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
   # GET /posts/ips
   describe 'GET /ips' do
     before do
@@ -145,7 +147,10 @@ RSpec.describe 'Posts API', type: :request do
 
     it 'returns the ips' do
       expect(json).to_not be_empty
-      expect(json).to eq(2)
+      expect(json.size).to eq(2)
+      json.each do |item|
+        expect([ip, posts.first.author_ip].include?(item['author_ip'])).to eq(true)
+      end
     end
   end
 end

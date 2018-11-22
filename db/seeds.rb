@@ -8,23 +8,22 @@
 require 'faker'
 
 
+ips = []
+
+# айпишников использовать штук 50 разных
+5.times do
+  ips.push Faker::Internet.ip_v4_address
+end
+
 # Постов в базе должно быть хотя бы 200к
 # Авторов лучше сделать в районе 100 штук,
 10.times do |i|
-  user = User.create(login: "user#{i}")
-  # айпишников использовать штук 50 разных
-  5.times do
-  	ip = Faker::Internet.ip_v4_address
-  	4.times do
-	  title = Faker::Lorem.sentence
-	  body = Faker::Lorem.paragraph
-	  post = Post.create(title: title, body: body, author_ip: ip, user: user)
-	  # Часть постов должна получить оценки
-	  special = Random.new 42
-	  rand(3).times do
-	  	Rating.create(value: special.rand(1..5), post: post)
-	  end
-	end
-
+  user = User.create(login: "User#{i}")
+  20.times do
+    post = Post.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, author_ip: ips.sample, user: user)
+    # Часть постов должна получить оценки
+    Faker::Number.between(1, 3).times do
+  	  Rating.create(value: Faker::Number.between(1, 5), post: post)
+    end
   end
 end
