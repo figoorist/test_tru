@@ -9,8 +9,11 @@ postgresql-10
 Валидаторы моделей: app/validators
 
 Данные для входа в бд: .env, пример .env.example
+
 rake db:drop db:create db:migrate
+
 rake db:seed
+
 rails s
 
 Features:
