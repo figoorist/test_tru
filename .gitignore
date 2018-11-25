@@ -26,5 +26,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Переменные окружения
-/.env
+# dotenv
+# TODO Comment out this rule if environment variables can be committed
+.env
