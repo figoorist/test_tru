@@ -6,12 +6,12 @@ class Post < ApplicationRecord
   # validation
   validates_with PostValidator
 
-  # 3. Получить топ N постов по среднему рейтингу. Просто массив объектов с заголовками и содержанием.
+  # 3. Get first N posts ordered by average
   def self.top(count)
     Post.all.order(average_rating: :desc).first(count)
   end
 
-  # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
+  # 4. Get IP addresses with more then 1 users. Like [ip=>[user1, user2], [ip2=>[user1, user3]]
   def self.ips
     Post.distinct("author_ip user_id").joins(:user).pluck(:author_ip, :login).inject({}) do |mem, value|
       if mem[value[0]].nil?
