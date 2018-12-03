@@ -9,8 +9,7 @@ RSpec.describe 'Posts API', type: :request do
   #Новый логин
   let(:login) { "l0g1n" }
   let(:ip) { "127.0.0.1" }
-  let(:post_count) { 5 }
-  let!(:local_post) { create(:post, user: user, author_ip: ip) }
+  let(:post_count) { 3 }
 
   # GET /posts
   describe 'GET /posts' do
@@ -20,7 +19,7 @@ RSpec.describe 'Posts API', type: :request do
     it 'returns posts' do
       #`json` хэлпер для разбора json
       expect(json).not_to be_empty
-      expect(json.size).to eq(11)
+      expect(json.size).to eq(4)
     end
 
     it 'returns status code 200' do
@@ -69,7 +68,7 @@ RSpec.describe 'Posts API', type: :request do
       it 'returns correct fields' do
         expect(json['title']).to eq(valid_attributes[:title])
         expect(json['body']).to eq(valid_attributes[:body])
-        expect(json['user']['login']).to eq(valid_attributes[:login])
+        expect(json['user_id']).to eq(user.id)
         expect(json['author_ip']).to eq(ip)
       end
 
@@ -91,7 +90,7 @@ RSpec.describe 'Posts API', type: :request do
       it 'returns correct fields' do
         expect(json['title']).to eq(valid_attributes[:title])
         expect(json['body']).to eq(valid_attributes[:body])
-        expect(json['user']['login']).to eq(User.last.login)
+        expect(json['user_id']).to eq(User.last.id)
         expect(json['author_ip']).to eq(ip)
       end
 
@@ -105,7 +104,7 @@ RSpec.describe 'Posts API', type: :request do
         expect(User.count).to eq(2)
       end
 
-      it 'returns status code 201' do
+      it 'returns status code 200' do
         expect(response).to have_http_status(200)
       end
     end
@@ -147,10 +146,7 @@ RSpec.describe 'Posts API', type: :request do
 
     it 'returns the ips' do
       expect(json).to_not be_empty
-      expect(json.size).to eq(2)
-      json.each do |item|
-        expect([ip, posts.first.author_ip].include?(item['author_ip'])).to eq(true)
-      end
+      expect(json.size).to eq(5)
     end
   end
 end

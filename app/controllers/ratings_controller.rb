@@ -4,18 +4,18 @@ class RatingsController < ApplicationController
 
   # GET /posts/:post_id/ratings
   def index
-    json_response_rating(@post.ratings)
+    json_response(@post.ratings)
   end
 
   # GET /posts/:post_id/ratings/:id
   def show
-    json_response_rating(@rating)
+    json_response(@rating)
   end
 
   # POST /posts/:post_id/ratings
   def create
     @post.ratings.create!(rating_params)
-    json_response_rating(average_rating: @post.average_rating)
+    json_response(average_rating: @post.average_rating)
   end
 
   private

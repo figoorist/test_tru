@@ -31,15 +31,13 @@ class PostsController < ApplicationController
   # 3. Получить топ N постов по среднему рейтингу. Просто массив объектов с заголовками и содержанием.
   # GET /posts/top/:n
   def top
-    posts = Post.all.order(average_rating: :desc).first(params[:n].to_i)
-    json_response(posts)
+    json_response(Post.top(params[:n].to_i))
   end
 
   # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
   # GET /posts/top/:n
   def ips
-    posts = User.select("posts.author_ip, count(users.login) as count").joins(:posts).group("posts.author_ip").having("count(users.login)>1")
-    json_response_rating(posts)
+    json_response(Post.ips)
   end
 
   private
