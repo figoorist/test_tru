@@ -28,14 +28,14 @@ class PostsController < ApplicationController
     json_response(@post)
   end
 
-  # 3. Получить топ N постов по среднему рейтингу. Просто массив объектов с заголовками и содержанием.
+  # 3. Get first N posts ordered by average rating
   # GET /posts/top/:n
   def top
     json_response(Post.top(params[:n].to_i))
   end
 
-  # 4. Получить список айпи, с которых постило несколько разных авторов. Массив объектов с полями: айпи и массив логинов авторов.
-  # GET /posts/top/:n
+  # 4. Get IP addresses with more then 1 users. Like [ip=>[user1, user2], [ip2=>[user1, user3]]
+  # GET /posts/ips
   def ips
     json_response(Post.ips)
   end
