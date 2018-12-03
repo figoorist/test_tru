@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   # validation
   validates_with PostValidator
 
-  # 3. Get first N posts ordered by average
+  # 3. Get first N posts ordered by average rating
   def self.top(count)
     Post.all.order(average_rating: :desc).first(count)
   end
